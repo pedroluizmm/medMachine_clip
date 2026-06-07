@@ -2,7 +2,7 @@
 
 Projeto academico de sistema especialista classico para triagem explicavel de suspeitas relacionadas a dengue, chikungunya, zika e febre do Oropouche.
 
-Este sistema nao realiza diagnostico medico real, nao recomenda tratamento e nao substitui avaliacao profissional. Ele demonstra fatos, regras de producao, memoria de trabalho, agenda, encadeamento para frente, fatos derivados e rastreamento de regras disparadas.
+Este sistema nao realiza diagnostico medico real, nao recomenda conduta clinica e nao substitui avaliacao profissional. Ele demonstra fatos, regras de producao, memoria de trabalho, agenda, encadeamento para frente, fatos derivados e rastreamento de regras disparadas.
 
 ## Por que CLIPS
 
@@ -141,3 +141,146 @@ Lucia -> Zika
 ## Limitacoes
 
 Esta versao e didatica e usa regras simplificadas. Nao usa banco de dados, interface grafica, API externa, machine learning, bibliotecas externas de logica, Prolog, redes Bayesianas ou logica fuzzy completa. Uma versao futura poderia integrar um motor fuzzy real, desde que a etapa fosse modelada e documentada adequadamente.
+
+## Interface web integrada
+
+O projeto tambem possui uma primeira versao web para analisar um paciente informado pelo usuario sem editar arquivos `.clp`.
+
+Arquitetura:
+
+```text
+React + TypeScript + Vite
+-> JSON
+-> FastAPI + Pydantic
+-> arquivo temporario de fatos CLIPS
+-> CLIPSDOS.exe via subprocesso
+-> saida estruturada delimitada
+-> JSON
+-> dashboard web
+```
+
+O front nao contem as regras medicas. O back-end nao decide suspeitas, vinculos, intensidades ou alertas. O CLIPS continua responsavel pela inferencia por encadeamento para frente.
+
+## Pre-requisitos web
+
+Instale:
+
+```text
+Python 3
+Node.js com npm
+CLIPS 6.4.2
+```
+
+O CLIPS e localizado nesta ordem:
+
+1. variavel de ambiente `CLIPS_EXE`;
+2. `CLIPSDOS.exe` no `PATH`;
+3. `C:\Program Files\SSS\CLIPS 6.4.2\CLIPSDOS.exe`.
+
+## Configurar ambiente web
+
+```powershell
+.\scripts\setup_web.ps1
+```
+
+Esse script cria o ambiente virtual do back-end, instala `backend/requirements.txt` e executa `npm install` no front-end. Ele nao instala o CLIPS automaticamente.
+
+## Configuracao local
+
+O caminho do CLIPS fica em `.env.local`, na raiz do projeto. O `setup_web.ps1` cria esse arquivo automaticamente quando encontra a instalacao padrao:
+
+```text
+C:\Program Files\SSS\CLIPS 6.4.2\CLIPSDOS.exe
+```
+
+`.env.local` e especifico da maquina e nao deve ser enviado ao Git. O arquivo versionavel e `.env.example`.
+
+Fluxo inicial:
+
+```powershell
+.\scripts\setup_web.ps1
+.\scripts\run_web.ps1
+```
+
+Nas execucoes futuras, basta:
+
+```powershell
+.\scripts\run_web.ps1
+```
+
+Nao e necessario definir `CLIPS_EXE` manualmente em cada terminal.
+
+## Executar API e front-end
+
+Em terminais separados:
+
+```powershell
+.\scripts\run_api.ps1
+.\scripts\run_front.ps1
+```
+
+Ou iniciar os dois para desenvolvimento:
+
+```powershell
+.\scripts\run_web.ps1
+```
+
+Enderecos:
+
+```text
+API:   http://127.0.0.1:8000
+Front: http://127.0.0.1:5173
+```
+
+## Endpoints
+
+```text
+GET  /api/health
+GET  /api/options
+POST /api/analyze
+```
+
+`/api/analyze` recebe um paciente por requisicao, gera fatos temporarios em `runtime/tmp/<uuid>/`, executa o CLIPS e remove os arquivos temporarios ao finalizar.
+
+## Saida estruturada
+
+A integracao web usa `clips/output_structured.clp`, que imprime linhas entre:
+
+```text
+@@RESULT_START
+@@RESULT_END
+```
+
+A demonstracao em terminal continua usando `clips/output.clp`.
+
+## Testes web
+
+Back-end:
+
+```powershell
+backend\.venv\Scripts\python.exe -m pytest backend
+```
+
+Front-end:
+
+```powershell
+cd frontend
+npm run typecheck
+npm run build
+```
+
+Os testes CLIPS existentes continuam sendo executados por:
+
+```powershell
+.\scripts\run_tests.ps1
+```
+
+## Solucao de problemas
+
+Se `/api/health` indicar CLIPS indisponivel, defina:
+
+```powershell
+$env:CLIPS_EXE = "C:\Program Files\SSS\CLIPS 6.4.2\CLIPSDOS.exe"
+```
+
+Se a API nao iniciar, execute `.\scripts\setup_web.ps1`. Se o front nao iniciar, confirme que `frontend/node_modules/` existe. O sistema e academico, nao realiza diagnostico medico real e nao recomenda conduta clinica.

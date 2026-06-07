@@ -1,0 +1,12 @@
+.venv/
+backend/.venv/
+__pycache__/
+.pytest_cache/
+frontend/node_modules/
+frontend/dist/
+runtime/tmp/*
+!runtime/tmp/.gitkeep
+runtime/exports/react-generated/*.clp
+.env
+.env.local
+.env.*.local
