@@ -1,0 +1,55 @@
+=== SISTEMA ESPECIALISTA DE TRIAGEM DE ARBOVIROSES ===
+
+Uso academico: triagem baseada em regras, sem diagnostico medico real.
+
+INTENSIDADES CATEGORIZADAS
+
+Joao -> temperatura alta
+Maria -> temperatura moderada
+Ana -> temperatura moderada
+Lucia -> temperatura baixa
+Joao -> dor articular leve
+Maria -> dor articular moderada
+Ana -> dor articular extrema
+Lucia -> dor articular leve
+
+SUSPEITAS CLINICAS
+
+Joao -> OROPOUCHE
+Maria -> DENGUE
+Ana -> CHIKUNGUNYA
+Lucia -> ZIKA
+
+VINCULOS EPIDEMIOLOGICOS
+
+Joao -> OROPOUCHE
+Maria -> DENGUE
+Ana -> CHIKUNGUNYA
+Lucia -> DENGUE
+Lucia -> CHIKUNGUNYA
+Lucia -> ZIKA
+
+SUSPEITAS REFORCADAS
+
+Joao -> OROPOUCHE
+Maria -> DENGUE
+Ana -> CHIKUNGUNYA
+Lucia -> ZIKA
+
+ALERTAS DE TRIAGEM
+
+[LARANJA] Joao
+Acompanhamento de recidiva de Oropouche.
+Justificativa: Recidiva em caso com suspeita reforcada de Oropouche.
+
+[VERMELHO] Maria
+Sinal de alarme de dengue: dor abdominal na fase critica.
+Justificativa: Dor abdominal durante fase critica em caso com suspeita reforcada de dengue.
+
+[AMARELO] Ana
+Risco de evolucao articular prolongada.
+Justificativa: Dor articular extrema em fase subaguda com suspeita reforcada de chikungunya.
+
+[ROXO] Lucia
+Recomendacao de acompanhamento obstetrico.
+Justificativa: Gestacao em caso com suspeita reforcada de zika.

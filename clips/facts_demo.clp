@@ -1,0 +1,26 @@
+(deffacts casos-demo
+    (paciente (nome Joao) (temperatura 39.8) (dor-articular 3))
+    (sintoma (paciente Joao) (nome cefaleia-intensa))
+    (sintoma (paciente Joao) (nome fotofobia))
+    (exposicao (paciente Joao) (tipo vetor) (valor maruim))
+    (fase (paciente Joao) (nome recidiva))
+
+    (paciente (nome Maria) (temperatura 38.5) (dor-articular 5))
+    (sintoma (paciente Maria) (nome dor-no-corpo))
+    (sintoma (paciente Maria) (nome dor-retrorbital))
+    (sintoma (paciente Maria) (nome dor-abdominal))
+    (exposicao (paciente Maria) (tipo viagem) (valor area-endemica-dengue))
+    (fase (paciente Maria) (nome critica))
+
+    (paciente (nome Ana) (temperatura 38.8) (dor-articular 10))
+    (sintoma (paciente Ana) (nome dor-articular-incapacitante))
+    (exposicao (paciente Ana) (tipo surto-local) (valor chikungunya))
+    (fase (paciente Ana) (nome subaguda))
+
+    (paciente (nome Lucia) (temperatura 37.6) (dor-articular 2))
+    (sintoma (paciente Lucia) (nome exantema-com-coceira))
+    (sintoma (paciente Lucia) (nome conjuntivite))
+    (exposicao (paciente Lucia) (tipo vetor) (valor aedes))
+    (historico (paciente Lucia) (condicao gestante))
+    (fase (paciente Lucia) (nome aguda))
+)

@@ -1,0 +1,15 @@
+(load "clips/templates.clp")
+(load "clips/facts_demo.clp")
+(load "clips/rules_classification.clp")
+(load "clips/rules_epidemiology.clp")
+(load "clips/rules_suspicion.clp")
+(load "clips/rules_risk.clp")
+(load "clips/output.clp")
+
+(watch facts)
+(watch rules)
+(watch activations)
+
+(reset)
+(run)
+(imprimir-resultados)

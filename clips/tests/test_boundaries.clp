@@ -1,0 +1,21 @@
+(deffunction testar-temperatura (?paciente ?esperado ?mensagem)
+    (assert-equals 1 (contar-temperatura ?paciente) (str-cat ?mensagem " produz exatamente uma categoria"))
+    (assert-equals ?esperado (obter-temperatura ?paciente) ?mensagem)
+)
+
+(deffunction testar-dor (?paciente ?esperado ?mensagem)
+    (assert-equals 1 (contar-dor-articular ?paciente) (str-cat ?mensagem " produz exatamente uma categoria"))
+    (assert-equals ?esperado (obter-dor-articular ?paciente) ?mensagem)
+)
+
+(deffunction executar-testes-limites ()
+    (testar-temperatura Temp379 baixa "Temperatura 37.9 classificada como baixa")
+    (testar-temperatura Temp380 moderada "Temperatura 38.0 classificada como moderada")
+    (testar-temperatura Temp390 moderada "Temperatura 39.0 classificada como moderada")
+    (testar-temperatura Temp391 alta "Temperatura 39.1 classificada como alta")
+
+    (testar-dor Dor3 leve "Dor 3 classificada como leve")
+    (testar-dor Dor4 moderada "Dor 4 classificada como moderada")
+    (testar-dor Dor7 moderada "Dor 7 classificada como moderada")
+    (testar-dor Dor8 extrema "Dor 8 classificada como extrema")
+)
